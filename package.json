@@ -1,0 +1,18 @@
+{
+  "name": "jwks",
+  "description": "Cloudflare workers for JSON Web Key management",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "deploy": "pnpm --recursive run deploy",
+    "login": "wrangler login --browser=false --callback-host=0.0.0.0 --callback-port=8976 | stdbuf -oL sed 's/0.0.0.0/localhost/g'",
+    "test": "vitest"
+  },
+  "packageManager": "pnpm@10.12.4",
+  "dependencies": {
+    "wrangler": "^4.23.0"
+  },
+  "devDependencies": {
+    "vitest": "~3.2.4"
+  }
+}

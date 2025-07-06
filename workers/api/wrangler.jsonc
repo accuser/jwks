@@ -1,0 +1,46 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"compatibility_date": "2025-06-17",
+	"main": "src/index.ts",
+	"kv_namespaces": [
+		{
+			"binding": "JWKS_KV",
+			"id": "JWKS_KV"
+		}
+	],
+	"secrets_store_secrets": [
+		{
+			"binding": "SECRET_KEY",
+			"store_id": "SECRETS_STORE",
+			"secret_name": "SECRET_KEY"
+		}
+	],
+	"env": {
+		"production": {
+			"name": "jwks-api",
+			"workers_dev": true,
+			"kv_namespaces": [
+				{
+					"binding": "JWKS_KV",
+					"id": "b1c851e883d84c19a5e56169d7a1ef9e"
+				}
+			],
+			"observability": {
+				"enabled": true,
+			},
+			"secrets_store_secrets": [
+				{
+					"binding": "SECRET_KEY",
+					"store_id": "6ebbea5a7cce4033900caab4c541c64d",
+					"secret_name": "SECRET_KEY"
+				}
+			],
+			"triggers": {
+				"crons": [
+					"0 0 * * *",
+					"0 0 * * 1",
+				]
+			},
+		},
+	}
+}
