@@ -8,16 +8,9 @@
 			"id": "JWKS_KV"
 		}
 	],
-	"secrets_store_secrets": [
-		{
-			"binding": "SECRET_KEY",
-			"store_id": "SECRETS_STORE",
-			"secret_name": "SECRET_KEY"
-		}
-	],
 	"env": {
 		"production": {
-			"name": "jwks-api",
+			"name": "jwks",
 			"workers_dev": true,
 			"kv_namespaces": [
 				{
@@ -28,19 +21,12 @@
 			"observability": {
 				"enabled": true,
 			},
-			"secrets_store_secrets": [
+			"routes": [
 				{
-					"binding": "SECRET_KEY",
-					"store_id": "6ebbea5a7cce4033900caab4c541c64d",
-					"secret_name": "SECRET_KEY"
+					"pattern": "auth.agilearn.co.uk/.well-known/jwks.json",
+					"zone_id": "fa3395235f7e5b5cc5391d2ddb4e0ef8"
 				}
 			],
-			"triggers": {
-				"crons": [
-					"0 0 * * *",
-					"0 0 * * 1",
-				]
-			},
 		},
 	}
 }

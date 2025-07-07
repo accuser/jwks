@@ -1,5 +1,5 @@
 {
-	"name": "web",
+	"name": "@workers/jwks-api",
 	"scripts": {
 		"build": "wrangler build --env production",
 		"dev": "wrangler dev --ip 0.0.0.0 --persist-to ../../.wrangler/state",
@@ -11,9 +11,12 @@
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.8.49",
+		"@hono/valibot-validator": "^0.5.2",
+		"@types/node": "^24.0.10",
 		"hono": "^4.8.3",
-		"prettier": "^3.6.2",
+		"jose": "^6.0.11",
 		"typescript": "^5.8.3",
+		"valibot": "^1.1.0",
 		"vitest": "~3.2.4",
 		"wrangler": "^4.23.0"
 	}

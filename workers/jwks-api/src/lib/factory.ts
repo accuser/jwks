@@ -13,9 +13,21 @@ const factory = createFactory<{ Bindings: CloudflareBindings; Variables: { app: 
 					return err.getResponse();
 				}
 
-				console.error(`Error: ${err.message}`);
+				console.error(err.message);
+
 				return c.newResponse(null, 500);
 			})
+			.use(
+				bearerAuth({
+					verifyToken: async (token, c) => {
+						const {
+							env: { BEARER_TOKEN },
+						} = c;
+
+						return token === BEARER_TOKEN;
+					},
+				})
+			)
 			.use(async (c, next) => {
 				const {
 					env: { SECRET_KEY, JWKS_KV },
@@ -41,18 +53,7 @@ const factory = createFactory<{ Bindings: CloudflareBindings; Variables: { app: 
 				c.header('X-Request-ID', requestId);
 
 				await next();
-			})
-			.use(
-				bearerAuth({
-					verifyToken: async (token, c) => {
-						const {
-							env: { BEARER_TOKEN },
-						} = c;
-
-						return token === BEARER_TOKEN;
-					},
-				}),
-			);
+			});
 	},
 });
 

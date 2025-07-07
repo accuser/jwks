@@ -11,9 +11,7 @@ const factory = createFactory<{ Bindings: CloudflareBindings; Variables: { app: 
 					return err.getResponse();
 				}
 
-				if (err instanceof Error) {
-					console.error(`Error: ${err.message}`);
-				}
+				console.error(err.message);
 
 				return c.newResponse(null, 500);
 			})
@@ -38,7 +36,7 @@ const factory = createFactory<{ Bindings: CloudflareBindings; Variables: { app: 
 					allowMethods: ['GET', 'OPTIONS'],
 					credentials: false,
 					origin: '*',
-				}),
+				})
 			);
 	},
 });

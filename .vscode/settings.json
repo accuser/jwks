@@ -1,0 +1,3 @@
+{
+    "monolithium.folders.regex.apps": "^(app|web|api|frontend|backend|workers)"
+}

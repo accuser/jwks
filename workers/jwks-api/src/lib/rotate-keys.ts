@@ -10,24 +10,23 @@ const rotate = factory.createHandlers(
 	validator(
 		'json',
 		v.object({
-			keys: v.optional(v.array(v.picklist(['access', 'auth', 'id']))),
+			keys: v.optional(v.array(v.picklist(['access', 'auth', 'id'])), ['access', 'auth', 'id']),
 		}),
 		(res, c) => {
 			if (res.success === false) {
 				return c.json({ error: res.issues }, 400);
 			}
-		},
+		}
 	),
 	async (c) => {
 		const { generateKeys, getConfigFor } = c.get('app');
-		const { keys = ['access', 'auth', 'id'] } = c.req.valid('json');
+		const { keys } = c.req.valid('json');
 
 		const config = await getConfigFor(keys);
 
 		try {
 			const result = await Promise.allSettled(
 				Object.entries(config).map(async ([key, { grace = DEFAULT_GRACE, ttl = DEFAULT_TTL } = {}]) => {
-					console.log(`Rotating key: ${key}, ttl=${ttl}, grace=${grace}`);
 					try {
 						const { jwe, jwk, kid } = await generateKeys();
 
@@ -42,15 +41,14 @@ const rotate = factory.createHandlers(
 					} catch (e) {
 						error(`rotate ${key}`, e);
 					}
-				}),
+				})
 			);
-			console.log(`rotate keys result: ${JSON.stringify(result)}`);
 		} catch (error) {
 			return c.json({ error: 'Failed to rotate keys' }, 500);
 		}
 
 		return c.json(null, { status: 202, statusText: 'Accepted' });
-	},
+	}
 );
 
 export { rotate as default };
